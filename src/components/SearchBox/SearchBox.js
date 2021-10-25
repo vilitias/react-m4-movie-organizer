@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './SearchBox.css';
 
+const apikey = "73b4663c";
+
 class SearchBox extends Component {
     state = {
         searchLine: ''
@@ -10,9 +12,21 @@ class SearchBox extends Component {
     }
     searchBoxSubmitHandler = (e) => {
         e.preventDefault();
+
+        fetch(`http://www.omdbapi.com/?apikey=${apikey}&s=${this.state.searchLine}`)
+        .then(response => response.json())
+        .then(data => {
+            if(data.Search){
+                this.props.fetchMovies(data.Search);
+            } else {
+                this.props.fetchMovies([]);
+            }
+        })
+        .catch(rej => {
+            console.log(rej)
+        })
     }
     render() {
-        const { searchLine } = this.state;
 
         return (
             <div className="search-box">
@@ -20,17 +34,17 @@ class SearchBox extends Component {
                     <label className="search-box__form-label">
                         Искать фильм по названию:
                         <input
-                            value={searchLine}
+                            value={this.state.searchLine}
                             type="text"
                             className="search-box__form-input"
                             placeholder="Например, Shawshank Redemption"
-                            onChange={this.searchLineChangeHandler}
+                            onChange={(event) => this.searchLineChangeHandler(event)}
                         />
                     </label>
                     <button
                         type="submit"
                         className="search-box__form-submit"
-                        disabled={!searchLine}
+                        disabled={!this.state.searchLine}
                     >
                         Искать
                     </button>

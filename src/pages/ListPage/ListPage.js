@@ -8,8 +8,8 @@ class ListPage extends Component {
         ]
     }
     componentDidMount() {
-        const id = this.props.match.params;
-        console.log(id);
+        // const id = this.props.match.params;
+        // console.log(id);
         // TODO: запрос к сервер на получение списка
         // TODO: запросы к серверу по всем imdbID
     }
@@ -21,7 +21,7 @@ class ListPage extends Component {
                     {this.state.movies.map((item) => {
                         return (
                             <li key={item.imdbID}>
-                                <a href="https://www.imdb.com/title/tt0068646/" target="_blank">{item.title} ({item.year})</a>
+                                <a href="https://www.imdb.com/title/tt0068646/" >{item.title} ({item.year})</a>
                             </li>
                         );
                     })}

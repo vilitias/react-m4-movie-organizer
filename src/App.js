@@ -7,11 +7,20 @@ import './reset.css';
 import './common.css';
 
 class App extends React.Component {
+
+  state = {
+    listId : ""
+  }
+
+  setListId = (id) => {
+    this.setState({listId: id})
+  }
+
   render() {
     return (
       <div className="app">
-        <Route path="/" exact component={MainPage} />
-        <Route path="/list/:id" exact component={ListPage} />
+        <Route path="/" exact> <MainPage setListId={this.setListId} listId={this.state.listId}/></Route>
+        <Route path={`/list/${this.state.listId}`} ><ListPage /></Route>
       </div>
     );
   }
