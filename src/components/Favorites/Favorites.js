@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import './Favorites.css';
 
 
@@ -34,9 +35,6 @@ class Favorites extends Component {
         .then(data => {
             this.props.setListId(data.id)
         })
-
-
-
     } 
 
     render() { 
@@ -55,7 +53,7 @@ class Favorites extends Component {
                 </ul>
 
                 {this.props.listId ? 
-                <a href={`/list/${this.props.listId}`} >Перейти к списку</a> 
+                <Link to={`/list/${this.props.listId}`} >Перейти к списку</Link> 
                 :
                 <button 
                 type="button" 

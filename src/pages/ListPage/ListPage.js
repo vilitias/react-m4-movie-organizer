@@ -3,25 +3,36 @@ import './ListPage.css';
 
 class ListPage extends Component {
     state = {
-        movies: [
-            { title: 'The Godfather', year: 1972, imdbID: 'tt0068646' }
-        ]
+        movies: [],
+        moviesIds: [],
+        listTitle: ""
     }
     componentDidMount() {
-        // const id = this.props.match.params;
-        // console.log(id);
-        // TODO: запрос к сервер на получение списка
-        // TODO: запросы к серверу по всем imdbID
+        fetch(`https://acb-api.algoritmika.org/api/movies/list/${this.props.listId}`)
+        .then(res => res.json())
+        .then(data => {
+
+
+            for (let i = 0; i < data.movies.length; i++) {
+                fetch(`http://www.omdbapi.com/?apikey=73b4663c&i=${data.movies[i]}`)
+                .then(res => res.json())
+                .then(data => {
+                    this.setState({movies: [...this.state.movies, data]})
+                })
+            }
+
+            this.setState({listTitle: data.title});
+        })
     }
     render() { 
         return (
             <div className="list-page">
-                <h1 className="list-page__title">Мой список</h1>
+                <h1 className="list-page__title">{this.state.listTitle}</h1>
                 <ul>
                     {this.state.movies.map((item) => {
                         return (
                             <li key={item.imdbID}>
-                                <a href="https://www.imdb.com/title/tt0068646/" >{item.title} ({item.year})</a>
+                                <a href={`https://www.imdb.com/title/${item.imdbID}/`}> {item.Title} ({item.Year})</a>
                             </li>
                         );
                     })}

@@ -20,7 +20,7 @@ class App extends React.Component {
     return (
       <div className="app">
         <Route path="/" exact> <MainPage setListId={this.setListId} listId={this.state.listId}/></Route>
-        <Route path={`/list/${this.state.listId}`} ><ListPage /></Route>
+        <Route path={`/list/${this.state.listId}`} ><ListPage listId={this.state.listId}/></Route>
       </div>
     );
   }
